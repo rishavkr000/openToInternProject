@@ -21,9 +21,9 @@ let isValidEmail = function (email) {
     return emailRegex.test(email)
 }
 
-let isValidMobile = function (number) {
-    let mobileRegex = /^\d{10}$/;
-    return mobileRegex.test(number);
+const isValidMobile = function (number) {
+    let phoneRegex = /^[6-9]\d{9}$/;
+    return phoneRegex.test(number);
 }
 
 let isValidName =function(name){
@@ -43,4 +43,13 @@ const isValidUrl = function (value) {
 }
 
 
-module.exports = { isValidRequestBody, isValid, isValidObjectId, isValidEmail, isValidMobile, isValidUrl,isValidFullName, isValidName }
+module.exports = {
+    isValidRequestBody, 
+    isValid, 
+    isValidObjectId, 
+    isValidEmail, 
+    isValidMobile, 
+    isValidUrl,
+    isValidFullName, 
+    isValidName 
+}

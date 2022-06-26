@@ -1,13 +1,13 @@
 const collegeModel = require("../model/collegeModel");
 const internModel = require("../model/internModel");
-const { isValidRequestBody, isValidObjectId, isValid, isValidEmail, isValidMobile, isValidFullName } = require("../utility/validator");
+const { isValidRequestBody, isValid, isValidEmail, isValidMobile, isValidFullName } = require("../utility/validator");
 
 let createIntern = async function (req, res) {
     try {
         let queryParams = req.query;
         let data = req.body;
         
-        if(isValidRequestBody(queryParams)) return res.status(400).send({ status: false, msg: "Here query is not a valid request!" })
+        if (isValidRequestBody(queryParams)) return res.status(400).send({ status: false, msg: "Here query is not a valid request!" })
         if (!isValidRequestBody(data)) return res.status(400).send({ status: false, msg: "No user input" })
 
         let { name, email, mobile, collegeName } = data;
@@ -19,12 +19,12 @@ let createIntern = async function (req, res) {
         if (!isValid(email)) return res.status(400).send({ status: false, msg: "Email is required" })
         if (!isValidEmail(email)) return res.status(400).send({ status: false, msg: `${email} is not a valid email` })
         const isUniqueEmail = await internModel.findOne({ email: email })  //For checking duplicate email id
-        if (isUniqueEmail) return res.status(400).send({ status: false, message: `This email ${email} is already registered` })
+        if (isUniqueEmail) return res.status(400).send({ status: false, message: `${email} is already registered` })
 
         if (!isValid(mobile)) return res.status(400).send({ status: false, msg: "Mobile is required" })
         if (!isValidMobile(mobile)) return res.status(400).send({ status: false, msg: `${mobile} is not a valid mobile number` })
         const isUniqueMobile = await internModel.findOne({ mobile: mobile })
-        if (isUniqueMobile) return res.status(400).send({ status: false, message: `This mobile number ${mobile} is already exist` })
+        if (isUniqueMobile) return res.status(400).send({ status: false, message: `${mobile} is already exist` })
         
         if (!isValid(collegeName)) return res.status(400).send({ status: false, msg: "College Name is required" })
 
@@ -50,7 +50,7 @@ let createIntern = async function (req, res) {
 
 const getIntern = async function (req, res) {
     try {
-        let collegName = req.query.collegeName.toLowerCase();
+        let collegName = req.query.collegeName;
         if (!isValid(collegName)) return res.status(400).send({ status: false, msg: "collegeName is required in query params" })
 
         const getCollege = await collegeModel.find({ name: collegName })
